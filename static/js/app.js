@@ -6,10 +6,11 @@ $('.tdGoods').on('click', function(e) {
         url: url,
         type: 'GET',
         success: function (request) {
-            selGoods.push(request)
-            $('#selItems').append('<tr><td>1</td><td>' + request +'</td></tr>')
-            let req = JSON.parse(request)
-            alert(req['id'])
+            selGoods.push(request['data'][0])
+            // $('#selItems').append('<tr><td>1</td><td>' + request['data'][0]['good_name'] +'</td></tr>')
+            // alert(request['data'][0]['good_name'])
+            $('#name').text(request['data'][0]['good_name'])
+            $('#addItem').modal('show')
         }
     })
 })

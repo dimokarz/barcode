@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import JsonResponse
 from .models import Organisation, Goods
 
 
@@ -11,4 +11,4 @@ def index(request):
 def selGood(request):
     currID = request.GET.get('id')[2:]
     selected = Goods.objects.filter(id=currID).values()
-    return HttpResponse(selected)
+    return JsonResponse({'data': list(selected)})
