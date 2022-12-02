@@ -8,10 +8,14 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h5 id="name">.</h5>
+                <div class="row">
+                    <div class="col-9"><input type="text" class="form-control" id="name"></div>
+                    <div class="col-3"><input type="text" class="form-control" id="count"></div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-success" id="addBtn">Добавить</button>
             </div>
         </div>
     </div>
