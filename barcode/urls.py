@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', app.views.index),
     path('sel/', app.views.selGood),
+    path('prn/', app.views.prnPage)
 ]

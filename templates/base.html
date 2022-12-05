@@ -18,9 +18,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                &nbsp;&nbsp;Печать этикеток
+            </a>
+        </div>
+    </nav>
+
     <div class="container">
         <br>
         <div>{% block content%}{% endblock content %}</div>
+        <div class="d-grid gap-2 fixed-bottom" style="padding: 10px;">
+            <button class="btn btn-primary btn-lg btn-high" id="btnPrint" role="button">Печать</button>
+        </div>
     </div>
 </body>
 {% include "modals.html" %}
