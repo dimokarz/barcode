@@ -1,22 +1,26 @@
-selGoods = []
-currGood = {}
-tCount = 0
+let selGoods = {}
+let currTr = ''
+let currCount
+let tCount = 0
 
 $(document).ready(function() {
     switch (document.location.pathname) {
         case '/':
             selGoods = []
+            $('.table').css('cursor', 'pointer')
             break
         case '/prn/':
             console.log(currGood)
             for (let row in selGoods) {
                 alert(row[0])
             }
+            break
     }
 })
 
 $('.tdGoods').on('click', function(e) {
     let url = '/sel/?id=' + e.target.id
+    currTr = e.target.id.replace('d', 'r')
     $.ajax({
         url: url,
         type: 'GET',
@@ -34,11 +38,12 @@ $('.btn').on('click', function (e) {
     let btn = e.target.id
     switch (btn) {
         case 'addBtn':
-            currGood['name'] = $('#name').val()
-            currGood['count'] = $('#count').val()
-            selGoods.push(currGood)
+            let currGood = $('#name').val()
+            currCount = $('#count').val()
+            selGoods[currGood] = currCount
             $('#addItem').modal('hide')
-            $('#selItems').append('<tr><th scope="row">' + ++tCount + '</th><td class="col-5">' + currGood['name'] +'</td><td>' + currGood['count'] + '</td></tr>')
+            $('#selItems').append('<tr><th scope="row">' + ++tCount + '</th><td class="col-5">' + currGood +'</td><td>' + currCount + '</td></tr>')
+            $('#' + currTr).remove()
             break
         case 'btnInc':
             currCount = $('#count').focus().val()
@@ -54,7 +59,14 @@ $('.btn').on('click', function (e) {
             break
         case 'btnPrint':
             if (document.location.pathname === '/') {
-                window.open('/prn/?sel=' + selGoods, '_self')
+                console.log(selGoods)
+                for (let row in selGoods) {
+                    console.log(typeof row)
+                    $('#prevRow').append(
+                        '<div class="col-6 border">' + row + '</div>'
+                    )
+                }
+                $('#preView').modal('show')
             }
     }
 })

@@ -13,7 +13,7 @@
                 </thead>
                 <tbody>
                     {% for good in goods %}
-                        <tr>
+                        <tr id="tr{{ good.id }}">
                             <th scope="row">{{ forloop.counter }}</th>
                             <td class='tdGoods' id="td{{ good.id }}">
                                 {{ good.good_name }}
