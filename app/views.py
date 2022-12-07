@@ -6,7 +6,8 @@ from .models import Organisation, Goods
 
 def index(request):
     goods = Goods.objects.all().values()
-    return render(request, 'index.html', {'goods': goods})
+    org = Organisation.objects.all().values()
+    return render(request, 'index.html', {'goods': goods, 'org': org})
 
 
 def selGood(request):

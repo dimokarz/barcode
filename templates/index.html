@@ -61,4 +61,11 @@
         </div>
     </div>
 
+    <p id="org" style="display: none">
+        {% for row in org %}
+            {{ row.org_name }}
+            {{ row.org_address }}
+        {% endfor %}
+    </p>
+
 {% endblock content %}

@@ -1,4 +1,5 @@
-let selGoods = {}
+let selGoods = []
+let currStr = {}
 let currTr = ''
 let currCount
 let tCount = 0
@@ -6,7 +7,6 @@ let tCount = 0
 $(document).ready(function() {
     switch (document.location.pathname) {
         case '/':
-            selGoods = []
             $('.table').css('cursor', 'pointer')
             $('#datepicker').datepicker({
                 format: 'dd.mm.yyyy',
@@ -46,25 +46,23 @@ $('.btn').on('click', function (e) {
     let btn = e.target.id
     switch (btn) {
         case 'addBtn':
+            currStr = {}
             let currId = currTr.slice(2)
-            let currGood = $('#name').val()
-            let currArt = $('#art' + currId).text()
-            let currPlu = $('#plu' + currId).text()
-            let currCns = $('#cns' + currId).text()
-            let currCnd = $('#cnd' + currId).text()
-            let currPer = $('#per' + currId).text()
-            let currNut = $('#nut' + currId).text()
-            let currTxt = $('#txt' + currId).text()
-            currCount = $('#count').val()
-            selGoods[currGood] = currCount
+            currStr['currId'] = currId
+            currStr['currGood'] = $('#name').val()
+            currStr['currArt'] = $('#art' + currId).text()
+            currStr['currPlu'] = $('#plu' + currId).text()
+            currStr['currCns'] = $('#cns' + currId).text()
+            currStr['currCnd'] = $('#cnd' + currId).text()
+            currStr['currPer'] = $('#per' + currId).text()
+            currStr['currNut'] = $('#nut' + currId).text()
+            currStr['currTxt'] = $('#txt' + currId).text()
+            currStr['currCnt'] = $('#count').val()
+            selGoods.push(currStr)
             $('#addItem').modal('hide')
             $('#selItems').append(
-                '<tr><th scope="row">' + currId + '</th>' + '<td class="col-5">' + currGood + '</td>' +
-                '<td>' + currCount + '</td>' + '<td style="display: none">' + currArt + '</td>' +
-                '<td style="display: none">' + currPlu + '</td>' + '<td style="display: none">' + currPlu + '</td>' +
-                '<td style="display: none">' + currCns + '</td>' + '<td style="display: none">' + currPlu + '</td>' +
-                '<td style="display: none">' + currCnd + '</td>' + '<td style="display: none">' + currPer + '</td>' +
-                '<td style="display: none">' + currNut + '</td>' + '<td style="display: none">' + currTxt + '</td>' + '</tr>'
+                '<tr><th scope="row">' + currStr['currId'] + '</th>' + '<td>' + currStr['currGood'] + '</td>' +
+                '<td>' + currStr['currCnt'] + '</td>' + '</tr>'
             )
             $('#' + currTr).remove()
             break
@@ -82,6 +80,8 @@ $('.btn').on('click', function (e) {
             break
         case 'btnPrint':
             if (document.location.pathname === '/') {
+                let org = $('#org').text()
+                let currDate = new Date();
                 console.log(selGoods)
                 // for (let row in selGoods) {
                 //     console.log(typeof row)
@@ -89,14 +89,21 @@ $('.btn').on('click', function (e) {
                 //         '<div class="col-6 border">' + row + '</div>'
                 //     )
                 // }
-
-$("#selItems tr").each(function(){
-console.log(this);
-  $("td",this).each(function(){
-    console.log(this.text());
-   });
-});
-
+                for (let i=0; i < selGoods.length; i++) {
+                    $('#prevRow').append(
+                        `<div class="col-6 border">
+                            <div class="row border-bottom"><b>${selGoods[i]['currGood']}</b></div>
+                            <div class="row">
+                                <div class="col-6"><b>PLU:</b>${selGoods[i]['currPlu']}</div>
+                                <div class="col-6"><b>Код:</b>${selGoods[i]['currArt']}</div>
+                            </div>
+                            <div class="row"><div class="col"><b>Состав:</b>${selGoods[i]['currCns']}</div></div>
+                            <div class="row"><div class="col"><b>Пищевая ценность:</b>${selGoods[i]['currNut']}</div></div>
+                            <div class="row"><div class="col"><b>Изготовитель:</b>${org}</div></div>
+                            <div class="row"><div class="col"><b>Дата производства и упаковки:</b>${currDate}</div></div>
+                        </div>`
+                    )
+                }
                 $('#preView').modal('show')
             }
     }
