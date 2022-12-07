@@ -4,7 +4,8 @@
 
     <div class="row">
         <div class="col-6">
-            <table class="table table-hover">
+            <table class="table table-hover caption-top">
+                <caption>Номенклатура</caption>
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -18,13 +19,35 @@
                             <td class='tdGoods' id="td{{ good.id }}">
                                 {{ good.good_name }}
                             </td>
+                            <td class='tdGoods' id="art{{ good.id }}" style="display: none">
+                                {{ good.good_article }}
+                            </td>
+                            <td class='tdGoods' id="plu{{ good.id }}" style="display: none">
+                                {{ good.goods_plu }}
+                            </td>
+                            <td class='tdGoods' id="cns{{ good.id }}" style="display: none">
+                                {{ good.goods_constituent }}
+                            </td>
+                            <td class='tdGoods' id="cnd{{ good.id }}" style="display: none">
+                                {{ good.goods_conditions }}
+                            </td>
+                            <td class='tdGoods' id="per{{ good.id }}" style="display: none">
+                                {{ good.goods_period }}
+                            </td>
+                            <td class='tdGoods' id="nut{{ good.id }}" style="display: none">
+                                {{ good.goods_nutrition }}
+                            </td>
+                            <td class='tdGoods' id="txt{{ good.id }}" style="display: none">
+                                {{ good.goods_text }}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
         <div class="col-6">
-            <table class="table table-hover" id="selItems">
+            <table class="table table-hover caption-top" id="selItems">
+                <caption>Этикетки</caption>
                 <thead>
                     <tr>
                         <th scope="col">#</th>
