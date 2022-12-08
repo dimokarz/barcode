@@ -21,24 +21,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js" integrity="sha512-tPXUMumrKam4J6sFLWF/06wvl+Qyn27gMfmynldU730ZwqYkhT2dFUmttn2PuVoVRgzvzDicZ/KgOhWD+KAYQQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+
 </head>
 <body>
 
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 &nbsp;&nbsp;Печать этикеток
             </a>
+            <div class="d-flex">
+                <input type="text" class="form-control col-sm-8" id="datepicker" placeholder="Выбор даты" style="width: 200px;">
+                &nbsp;&nbsp;<button class="btn btn-primary" id="btnPrint" role="button" disabled>Печать</button>
+            </div>
         </div>
     </nav>
 
     <div class="container">
         <br>
         <div>{% block content%}{% endblock content %}</div>
-        <div class="d-grid gap-2 fixed-bottom" style="padding: 10px;">
-            <button class="btn btn-primary btn-lg btn-high" id="btnPrint" role="button">Печать</button>
-        </div>
+{#        <div class="d-grid gap-2 fixed-bottom" style="padding: 10px;">#}
+{#            <button class="btn btn-primary btn-lg btn-high" id="btnPrint" role="button">Печать</button>#}
+{#        </div>#}
     </div>
+    <footer class="bg-light text-center text-lg-start fixed-bottom">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);" id="footer">
+            Этикетки не выбраны
+        </div>
+    </footer>
 </body>
 {% include "modals.html" %}
 <script src="{% static 'js/app.js' %}"></script>
