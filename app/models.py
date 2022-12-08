@@ -25,6 +25,7 @@ class Goods(models.Model):
     goods_conditions = models.CharField(max_length=200, verbose_name='Условия хранения')
     goods_period = models.IntegerField(verbose_name='Срок хранения')
     goods_nutrition = models.CharField(max_length=200, verbose_name='Пищевая ценность')
+    goods_weight = models.IntegerField(verbose_name='Масса')
     goods_text = models.CharField(max_length=100, verbose_name='Текст')
 
     def __str__(self):

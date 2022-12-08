@@ -4,6 +4,39 @@ let currTr = ''
 let currCount
 let tCount = 0
 
+const stikers = (cnt) => {
+    let stickerCnt
+    if (cnt > 20) {
+        cnt = cnt.toString()
+        cnt = Number(cnt.slice(-1))
+    }
+    if (cnt === 1) {
+        stickerCnt = `этикетка`
+    }
+    else if (cnt > 1 && cnt < 5) {
+        stickerCnt = 'этикетки'
+    }
+    else if (cnt > 4 && cnt < 21) {
+        stickerCnt = 'этикеток'
+    }
+    return stickerCnt
+}
+
+const nDate = (dt, per) => {
+    dt.setDate(dt.getDate() + Number(per))
+    let dd = dt.getDate().toString()
+    if (dd.length === 1) {
+        dd = '0' + dd
+    }
+    let mm = dt.getMonth() + 1
+    mm = mm.toString()
+    if (mm.length === 1) {
+        mm = '0' + mm
+    }
+    let yy = dt.getFullYear()
+    return `${dd}.${mm}.${yy}`
+}
+
 $(document).ready(function() {
     switch (document.location.pathname) {
         case '/':
@@ -60,10 +93,15 @@ $('.btn').on('click', function (e) {
             currStr['currNut'] = $('#nut' + currId).text()
             currStr['currTxt'] = $('#txt' + currId).text()
             currStr['currCnt'] = $('#count').val()
+            currStr['currWei'] = $('#wei' + currId).text()
             selGoods.push(currStr)
             $('#addItem').modal('hide')
             tCount = tCount + Number(currStr['currCnt'])
-            $('#footer').text('Будет напечатано ' + tCount + ' этикеток')
+
+            $('#footer').text(tCount + ' ' + stikers(tCount))
+            for (let i=0; i<2; i++) {
+                $('#footer').fadeTo('slow', 0.0).fadeTo('slow', 1.0);
+            }
             $('#selItems').append(
                 '<tr><th scope="row">' + currStr['currId'] + '</th>' + '<td>' + currStr['currGood'] + '</td>' +
                 '<td>' + currStr['currCnt'] + '</td>' + '</tr>'
@@ -87,27 +125,39 @@ $('.btn').on('click', function (e) {
             if (document.location.pathname === '/') {
                 let org = $('#org').text()
                 let lDate = $('#datepicker').val();
-                let pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
-                lDate = new Date(lDate.replace(pattern,'$3-$2-$1'));
-                let dd = lDate.getDate()
-                let mm = lDate.getMonth()
-                let yy = lDate.getFullYear()
+                let pattern = /(\d{2})\.(\d{2})\.(\d{4})/
+                let dt = new Date(lDate.replace(pattern,'$3-$2-$1')); //!!!
+                // dt.setDate(dt.getDate() + 30)
+                // let dd = dt.getDate().toString()
+                // if (dd.length === 1) {
+                //     dd = '0' + dd
+                // }
+                // let mm = dt.getMonth() + 1
+                // mm = mm.toString()
+                // if (mm.length === 1) {
+                //     mm = '0' + mm
+                // }
+                // let yy = dt.getFullYear()
+                // let nDate = `${dd}.${mm}.${yy}` // !!!
                 for (let i=0; i < selGoods.length; i++) {
                     for (let k=1; k<=selGoods[i]['currCnt']; k++) {
+                        let currArt = selGoods[i]['currArt'].replace(/\s/g,'')
+                        currArt = currArt.slice(1, 7)
                         $('#prevRow').append(
                             `<div class="col-12 border" id="prn${i+1}" style="page-break-after: always;">
                                 <div class="row border-bottom" style="font-size: 10pt;"><b>${selGoods[i]['currGood']}</b></div>
                                 <hr>
                                 <div class="row">
-                                    <b>PLU:</b>${selGoods[i]['currPlu']}&nbsp;&nbsp;<b>Код:</b>${selGoods[i]['currArt']}                            
+                                    <b>PLU:</b>${selGoods[i]['currPlu']}&nbsp;&nbsp;<b>Код: </b>${currArt}                            
                                 </div>
                                 <div class="row"><div class="col"><b>Состав: </b>${selGoods[i]['currCns']}</div></div>
                                 <div class="row"><div class="col"><b>Пищевая ценность: </b>${selGoods[i]['currNut']}</div></div>
                                 <div class="row"><div class="col"><b>Изготовитель: </b>${org}</div></div>
                                 <div class="row"><div class="col"><b>Дата производства и упаковки: </b>${$('#datepicker').val()}</div></div>
-                                <div class="row"><div class="col"><b>Годен до: </b>${dd}.${mm}.${yy}</div></div>                         
+                                <div class="row"><div class="col"><b>Годен до: </b>${nDate(dt, selGoods[i]['currPer'])}</div></div>                         
                                 <div class="row justify-content-center"><svg id="barcode" style="width: 30%;"></svg></div> 
-                                <div class="row"><div class="col"><b>${selGoods[i]['currTxt']}</b></div></div>                               
+                                <div class="row"><div class="col"><b>Масса НЕТТО: </b>${selGoods[i]['currWei']}кг.</div></div> 
+                                <div class="row"><div class="col"><b>${selGoods[i]['currTxt']}</b></div></div>                                                             
                             </div>`
                         )
                         let ean = selGoods[i]['currArt']
@@ -128,16 +178,5 @@ $('.btn').on('click', function (e) {
                 setTimeout(function () {window.open('/', '_self')}, 2000)
             }
             break
-        // case 'prnStart':
-        //     $('body').css('font-size', '7pt')
-        //     $('body').css('font-family', 'Courier New')
-        //     const printContents = document.getElementById('prevRow').innerHTML;
-        //     const originalContents = document.body.innerHTML;
-        //     document.body.innerHTML = printContents;
-        //     window.print();
-        //     document.body.innerHTML = originalContents;
-        //     window.open('/', '_self')
-        //     $('body').css('font-size', '100%')
-        //     break
     }
 })
