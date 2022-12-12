@@ -142,31 +142,29 @@ $('.btn').on('click', function (e) {
                 for (let i=0; i < selGoods.length; i++) {
                     for (let k=1; k<=selGoods[i]['currCnt']; k++) {
                         let currArt = selGoods[i]['currArt'].replace(/\s/g,'')
-                        currArt = currArt.slice(1, 7)
+                        currArt = currArt.slice(0, 7)
                         $('#prevRow').append(
                             `<div class="col-12 border" id="prn${i+1}" style="page-break-after: always;">
-                                <div class="row border-bottom" style="font-size: 10pt;"><b>${selGoods[i]['currGood']}</b></div>
-                                <hr>
+                                <div class="row border-bottom" style="font-size: 9pt;"><b>${selGoods[i]['currGood']}</b></div>
                                 <div class="row">
-                                    <b>PLU:</b>${selGoods[i]['currPlu']}&nbsp;&nbsp;<b>Код: </b>${currArt}                            
+                                    <b>PLU:</b>${selGoods[i]['currPlu']}&nbsp;&nbsp;<b>Код: </b>${currArt}                           
                                 </div>
                                 <div class="row"><div class="col"><b>Состав: </b>${selGoods[i]['currCns']}</div></div>
                                 <div class="row"><div class="col"><b>Пищевая ценность: </b>${selGoods[i]['currNut']}</div></div>
                                 <div class="row"><div class="col"><b>Изготовитель: </b>${org}</div></div>
                                 <div class="row"><div class="col"><b>Дата производства и упаковки: </b>${$('#datepicker').val()}</div></div>
-                                <div class="row"><div class="col"><b>Годен до: </b>${nDate(dt, selGoods[i]['currPer'])}</div></div>                         
-                                <div class="row justify-content-center"><svg id="barcode" style="width: 30%;"></svg></div> 
-                                <div class="row"><div class="col"><b>Масса НЕТТО: </b>${selGoods[i]['currWei']}кг.</div></div> 
+                                <div class="row"><div class="col"><b>Годен до: </b>${nDate(dt, selGoods[i]['currPer'])}<b> Масса НЕТТО: </b>${selGoods[i]['currWei']}кг.</div></div>                       
+                                <div class="row justify-content-center" style="margin-left: -5px;"><svg id="barcode${i}" style="width: 30%;"></svg></div>  
                                 <div class="row"><div class="col"><b>${selGoods[i]['currTxt']}</b></div></div>                                                             
                             </div>`
                         )
                         let ean = selGoods[i]['currArt']
                         ean = ean.replace(/\s/g,'')
-                        JsBarcode("#barcode", ean, {
+                        JsBarcode("#barcode" + i, ean, {
                           format: "EAN13",
                           lineColor: "#000000",
                           // width: 2,
-                          height: 20,
+                          height: 25,
                           displayValue: true,
                           fontSize: 10,
                           flat: true,
